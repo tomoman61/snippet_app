@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Snippet App</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- 説明 2.1 -->
+      <p>{{ message }}</p>
+      <p>{{ message2 }}</p>
+      <button v-on:click="changeMsg">Change</button>
+      <!-- 説明 2.2 -->
+    </div>
+
+    <script>
+      new Vue({
+        // 説明 2.3
+        el: "#app", // 説明 2.4
+        data() {
+          // 説明 2.5
+          return {
+            message1: "Hello Vue!",
+            message: "Hoge",
+            list: [{ title: "title1" }, { title: "title2" }],
+          };
+        },
+        mounted() {
+          // 説明 2.7
+          this.setMsg(); // 説明 2.8
+        },
+        methods: {
+          // 説明 2.9
+          setMsg: function () {
+            // 説明 2.10
+            this.message = "Set Message"; // 説明 2.11
+          },
+          changeMsg: function () {
+            this.message = "Changed Message";
+            axios.get("/snippets.json").then((response) => (this.message2 = response.data[0]["title"]));
+            this.message2 = this.list[0]["title"];
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
